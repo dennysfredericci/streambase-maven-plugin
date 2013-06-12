@@ -13,6 +13,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
+ * This class start a streambase server using the sbd file on
+ * streambase-home/bin
  * 
  * @goal start
  * 
@@ -21,24 +23,37 @@ import org.apache.maven.plugin.MojoFailureException;
 public class StartServer extends AbstractMojo {
 
 	/**
+	 * The main application .sbapp, .ssql, .sbar, .sbbundle, or .sbdeploy file
+	 * 
 	 * @required
 	 * @parameter property="application" alias="application"
 	 */
 	private String application;
 
 	/**
+	 * Any argument used to send do sbd
+	 * 
 	 * @parameter property="arguments" alias="arguments"
 	 */
 	private String[] arguments;
 
 	/**
+	 * The streambase installation directory
+	 * 
 	 * @required
 	 * @parameter property="streambase-home" alias="streambase-home"
 	 */
 	private File streambaseHome;
 
 	/**
+	 * Parameter used to wait until your process is ready!
+	 * 
+	 * The method to check it verify if waitFor contains in console log.
+	 * 
+	 * The default value is: StreamBaseHTTPServer
+	 * 
 	 * @parameter property="wait-for" alias="wait-for"
+	 *            default-value="StreamBaseHTTPServer"
 	 */
 	private String waitFor;
 
@@ -47,6 +62,10 @@ public class StartServer extends AbstractMojo {
 	 */
 	private File workingDirectory;
 
+	/**
+	 * The main method for goal start
+	 */
+	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 
 		try {
@@ -65,6 +84,10 @@ public class StartServer extends AbstractMojo {
 
 	}
 
+	/**
+	 * This method execute the command line async, but use the waitFor to
+	 * continue execution
+	 */
 	private void executeCommand(CommandLine command) throws ExecuteException, IOException, InterruptedException {
 		WaitCondition waitCondition = new WaitCondition(waitFor);
 		DefaultExecutor executor = new DefaultExecutor();
@@ -74,6 +97,9 @@ public class StartServer extends AbstractMojo {
 		waitCondition.await();
 	}
 
+	/**
+	 * @return {@link CommandLine} for sbd
+	 */
 	private CommandLine getCommand() {
 		String sbd = streambaseHome.getAbsolutePath() + File.separator + "bin" + File.separator + "sbd";
 		CommandLine command = new CommandLine(sbd);

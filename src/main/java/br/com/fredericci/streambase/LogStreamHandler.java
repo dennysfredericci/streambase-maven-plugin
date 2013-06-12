@@ -7,8 +7,9 @@ import org.apache.commons.exec.LogOutputStream;
 import org.apache.maven.plugin.logging.Log;
 
 /**
- * @author Dennys Fredericci
+ * The Log Output Stream
  * 
+ * @author Dennys Fredericci
  */
 public class LogStreamHandler extends LogOutputStream {
 
