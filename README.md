@@ -3,9 +3,9 @@ streambase-maven-plugin
 
 [![Build Status](https://travis-ci.org/dennysfredericci/streambase-maven-plugin.png?branch=master)](https://travis-ci.org/dennysfredericci/streambase-maven-plugin)
 
-This is a simple maven streambase plugin, useful for integration tests
+This is a simple maven streambase plugin to start and shutdown the server, useful for integration tests.
 
-
+Use the pom.xml below and run your tests with: mvn clean verify
 
 pom.xml :
     
